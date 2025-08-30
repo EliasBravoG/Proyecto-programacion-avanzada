@@ -8,22 +8,86 @@ public class AvanceCurricular {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        Carrera ingenieriaEjec = new Carrera("Ingeniería de Ejecución en Informática");
-        ingenieriaEjec.agregarAsignatura("INF2236", "Programación Avanzada", 6, 4);
-        carreras.put(ingenieriaEjec.getNombre(), ingenieriaEjec);
+        Carrera ingEjecInfo = new Carrera("Ingenieria de Ejecucion en Informatica");
+        Carrera ingCivilInfo = new Carrera("Ingenieria Civil Informatica");
+        Carrera ingCivilIndustrial = new Carrera("Ingenieria Civil Industrial");
+
+        // Malla completa segun imagen (sin tildes)
+        ingEjecInfo.agregarAsignatura("IEI101", "Fundamentos de Matematicas para Ingenieria", 6, 1);
+        ingEjecInfo.agregarAsignatura("IEI102", "Fundamentos de Algoritmos", 6, 1);
+        ingEjecInfo.agregarAsignatura("IEI103", "Introduccion a la Ingenieria Informatica", 6, 1);
+        ingEjecInfo.agregarAsignatura("IEI104", "Bienestar y Aprendizaje Universitario", 3, 1);
+        ingEjecInfo.agregarAsignatura("IEI105", "Antropologia Cristiana", 3, 1);
+
+        ingEjecInfo.agregarAsignatura("IEI201", "Algebra Lineal", 6, 2);
+        ingEjecInfo.agregarAsignatura("IEI202", "Calculo Diferencial e Integral", 6, 2);
+        ingEjecInfo.agregarAsignatura("IEI203", "Fundamentos de Programacion", 6, 2);
+        ingEjecInfo.agregarAsignatura("IEI204", "Desarrollo Integral y Comunicacion para Ingenieria", 3, 2);
+        ingEjecInfo.agregarAsignatura("IEI205", "Etica Cristiana", 3, 2);
+
+        ingEjecInfo.agregarAsignatura("IEI301", "Fisica para Ingenieria", 6, 3);
+        ingEjecInfo.agregarAsignatura("IEI302", "Estadistica Computacional", 6, 3);
+        ingEjecInfo.agregarAsignatura("IEI303", "Hardware y Sistemas Operativos", 6, 3);
+        ingEjecInfo.agregarAsignatura("IEI304", "Estructura de Datos", 6, 3);
+        ingEjecInfo.agregarAsignatura("IEI305", "Formacion Fundamental 1", 3, 3);
+
+        ingEjecInfo.agregarAsignatura("IEI401", "Redes de Computadores", 6, 4);
+        ingEjecInfo.agregarAsignatura("IEI402", "Base de Datos", 6, 4);
+        ingEjecInfo.agregarAsignatura("IEI403", "Programacion Avanzada", 6, 4);
+        ingEjecInfo.agregarAsignatura("IEI404", "Ingenieria de Software", 6, 4);
+        ingEjecInfo.agregarAsignatura("IEI405", "Ingles 1", 3, 4);
+        ingEjecInfo.agregarAsignatura("IEI406", "Formacion Fundamental 2", 3, 4);
+
+        ingEjecInfo.agregarAsignatura("IEI501", "Economia y Finanzas", 6, 5);
+        ingEjecInfo.agregarAsignatura("IEI502", "Inteligencia Artificial", 6, 5);
+        ingEjecInfo.agregarAsignatura("IEI503", "Modelamiento de Software", 6, 5);
+        ingEjecInfo.agregarAsignatura("IEI504", "Ingenieria de Requerimientos", 6, 5);
+        ingEjecInfo.agregarAsignatura("IEI505", "Ingles 2", 3, 5);
+        ingEjecInfo.agregarAsignatura("IEI506", "Optativo 1", 3, 5);
+
+        ingEjecInfo.agregarAsignatura("IEI601", "Optimizacion", 6, 6);
+        ingEjecInfo.agregarAsignatura("IEI602", "Taller de Base de Datos", 6, 6);
+        ingEjecInfo.agregarAsignatura("IEI603", "Ingenieria Web y Movil", 6, 6);
+        ingEjecInfo.agregarAsignatura("IEI604", "Experiencia del Usuario", 6, 6);
+        ingEjecInfo.agregarAsignatura("IEI605", "Ingles 3", 3, 6);
+        ingEjecInfo.agregarAsignatura("IEI606", "Optativo 2", 3, 6);
+
+        ingEjecInfo.agregarAsignatura("IEI701", "Taller de Ingenieria de Software", 6, 7);
+        ingEjecInfo.agregarAsignatura("IEI702", "Ciberseguridad", 6, 7);
+        ingEjecInfo.agregarAsignatura("IEI703", "Seminario de Titulo", 6, 7);
+        ingEjecInfo.agregarAsignatura("IEI704", "Tecnologias Emergentes", 6, 7);
+        ingEjecInfo.agregarAsignatura("IEI705", "Ingles 4", 3, 7);
+        ingEjecInfo.agregarAsignatura("IEI706", "Formacion Fundamental 3", 3, 7);
+
+        ingEjecInfo.agregarAsignatura("IEI801", "Negocios, Innovacion y Emprendimiento", 6, 8);
+        ingEjecInfo.agregarAsignatura("IEI802", "Proyecto de Titulo", 12, 8);
+        ingEjecInfo.agregarAsignatura("IEI803", "Legislacion, Etica y Tecnologia", 6, 8);
+        ingEjecInfo.agregarAsignatura("IEI804", "Optativo 3", 3, 8);
+
+        // Carreras adicionales con mallas cortas de ejemplo
+        ingCivilInfo.agregarAsignatura("ICI101", "Calculo I", 6, 1);
+        ingCivilInfo.agregarAsignatura("ICI102", "Programacion I", 6, 1);
+        ingCivilInfo.agregarAsignatura("ICI201", "Calculo II", 6, 2);
+
+        ingCivilIndustrial.agregarAsignatura("IND101", "Introduccion a la Ingenieria Industrial", 6, 1);
+        ingCivilIndustrial.agregarAsignatura("IND102", "Gestion de Operaciones I", 6, 2);
+
+        carreras.put(ingEjecInfo.getNombre(), ingEjecInfo);
+        carreras.put(ingCivilInfo.getNombre(), ingCivilInfo);
+        carreras.put(ingCivilIndustrial.getNombre(), ingCivilIndustrial);
 
         Profesor claudioCubillos = new Profesor("10.111.222-3", "Claudio Cubillos");
-        claudioCubillos.agregarAsignatura(new Asignatura("INF2236", "Programación Avanzada", 6, 4));
+        claudioCubillos.agregarAsignatura(new Asignatura("IEI403", "Programacion Avanzada", 6, 4));
         profesores.add(claudioCubillos);
 
         Alumno kevin = new Alumno("21.158.350-9", "Kevin Rubilar Toledo");
-        kevin.setCarrera(ingenieriaEjec);
-        kevin.agregarProgreso("INF2236", 6);
+        kevin.setCarrera(ingEjecInfo);
+        kevin.agregarProgreso("IEI403", 6);
         alumnos.put(kevin.getRut(), kevin);
 
-        Alumno sebastian = new Alumno("22.036.223-K", "Sebastián Urbina Aspee");
-        sebastian.setCarrera(ingenieriaEjec);
-        sebastian.agregarProgreso("INF2236", 6);
+        Alumno sebastian = new Alumno("22.036.223-K", "Sebastian Urbina Aspee");
+        sebastian.setCarrera(ingEjecInfo);
+        sebastian.agregarProgreso("IEI403", 6);
         alumnos.put(sebastian.getRut(), sebastian);
 
         int opcion;
@@ -34,7 +98,7 @@ public class AvanceCurricular {
             System.out.println("3. Mostrar Carreras y Malla");
             System.out.println("4. Actualizar Progreso Alumno");
             System.out.println("0. Salir");
-            System.out.print("Opción: ");
+            System.out.print("Opcion: ");
             String entrada = sc.nextLine();
             if (entrada.isBlank()) continue;
             try {
@@ -49,7 +113,7 @@ public class AvanceCurricular {
                 case 3 -> mostrarCarreras();
                 case 4 -> actualizarProgreso(sc);
                 case 0 -> { System.out.println("Saliendo..."); return; }
-                default -> System.out.println("Opción inválida.");
+                default -> System.out.println("Opcion invalida.");
             }
         }
     }
@@ -59,21 +123,29 @@ public class AvanceCurricular {
         String rut = sc.nextLine();
         System.out.print("Nombre: ");
         String nombre = sc.nextLine();
+
         if (carreras.isEmpty()) {
             System.out.println("No hay carreras registradas.");
             return;
         }
-        System.out.println("Carreras disponibles:");
-        for (String nomCarrera : carreras.keySet()) {
-            System.out.println(" - " + nomCarrera);
+        List<String> nombres = new ArrayList<>(carreras.keySet());
+        for (int i = 0; i < nombres.size(); i++) {
+            System.out.println((i+1) + ") " + nombres.get(i));
         }
-        System.out.print("Ingrese nombre de la carrera: ");
-        String nomCarrera = sc.nextLine();
-        Carrera carrera = carreras.get(nomCarrera);
-        if (carrera == null) {
-            System.out.println("Carrera no encontrada.");
+        System.out.print("Seleccione numero de carrera: ");
+        String s = sc.nextLine();
+        int idx;
+        try {
+            idx = Integer.parseInt(s) - 1;
+        } catch (NumberFormatException e) {
+            System.out.println("Entrada invalida.");
             return;
         }
+        if (idx < 0 || idx >= nombres.size()) {
+            System.out.println("Numero fuera de rango.");
+            return;
+        }
+        Carrera carrera = carreras.get(nombres.get(idx));
         Alumno nuevo = new Alumno(rut, nombre);
         nuevo.setCarrera(carrera);
         alumnos.put(rut, nuevo);
@@ -100,7 +172,7 @@ public class AvanceCurricular {
             System.out.println("No hay carreras.");
             return;
         }
-        System.out.println("Lista de Carreras:");
+        System.out.println("Lista de Carreras y Mallas:");
         for (Carrera c : carreras.values()) {
             System.out.println(c);
             for (Asignatura as : c.getMalla()) {
@@ -117,7 +189,7 @@ public class AvanceCurricular {
             System.out.println("Alumno no encontrado.");
             return;
         }
-        System.out.print("Ingrese código de asignatura: ");
+        System.out.print("Ingrese codigo de asignatura: ");
         String cod = sc.nextLine();
         Progreso objetivo = null;
         for (Progreso p : al.getHistorial()) {
@@ -136,7 +208,7 @@ public class AvanceCurricular {
         try {
             nota = Double.parseDouble(sNota);
         } catch (NumberFormatException e) {
-            System.out.println("Nota inválida.");
+            System.out.println("Nota invalida.");
             return;
         }
         if (nota >= 4.0) {

@@ -22,6 +22,6 @@ public class Asignatura {
 
     @Override
     public String toString() {
-        return id + " - " + nombre + " (" + creditos + " créditos, Sem " + semestreRecomendado + ")";
+        return id + " - " + nombre + " (" + creditos + " creditos, Sem " + semestreRecomendado + ")";
     }
 }
