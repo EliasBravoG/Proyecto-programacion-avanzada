@@ -25,7 +25,18 @@ public class Alumno {
     public String getNombre() { return nombre; }
     public void setNombre(String nombre) { this.nombre = nombre; }
     public Carrera getCarrera() { return carrera; }
-    public void setCarrera(Carrera carrera) { this.carrera = carrera; }
+
+    // Sincroniza malla -> historial
+    public void setCarrera(Carrera carrera) {
+        this.carrera = carrera;
+        this.historial.clear();
+        if (carrera != null) {
+            for (Asignatura a : carrera.getMalla()) {
+                this.historial.add(new Progreso(a.getId(), a.getCreditos()));
+            }
+        }
+    }
+
     public List<Progreso> getHistorial() { return historial; }
 
     @Override
