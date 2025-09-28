@@ -2,10 +2,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Alumno {
-    private String rut;
+    private final String rut;
     private String nombre;
     private Carrera carrera;
-    private List<Progreso> historial = new ArrayList<>();
+    private final List<Progreso> historial = new ArrayList<>();
 
     public Alumno(String rut, String nombre) {
         this.rut = rut;
@@ -32,8 +32,8 @@ public class Alumno {
     }
     this.nombre = nombre.trim();
 }
-
-
+    
+    
     public void agregarProgreso(Progreso progreso) {
         if (progreso == null) return;
         for (Progreso p : historial) {
@@ -50,6 +50,23 @@ public class Alumno {
         }
         return false;
     }
+    public boolean eliminarProgresoPorId(String idAsignatura) {
+        if (idAsignatura == null) return false;
+        for (int i = 0; i < historial.size(); i++) {
+            if (idAsignatura.equals(historial.get(i).getIdAsignatura())) {
+                historial.remove(i);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean eliminarProgresoEnPosicion(int index) {
+        if (index < 0 || index >= historial.size()) return false;
+        historial.remove(index);
+    return true;
+    }
+
 
     @Override
     public String toString() { return nombre + " (" + rut + ")"; }

@@ -4,11 +4,11 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class MostrarAlumnosFrame extends JFrame {
-    private JTable tabla;
-    private DefaultTableModel modelo;
-    private JButton btnEditar;
-    private JButton btnEliminar;
-    private JButton btnCerrar;
+    private final JTable tabla;
+    private final DefaultTableModel modelo;
+    private final JButton btnEditar;
+    private final JButton btnEliminar;
+    private final JButton btnCerrar;
 
     public MostrarAlumnosFrame() {
         setTitle("Lista de Alumnos");
@@ -26,7 +26,7 @@ public class MostrarAlumnosFrame extends JFrame {
         tabla = new JTable(modelo);
         JScrollPane scroll = new JScrollPane(tabla);
 
-        // Botones
+        
         btnEditar = new JButton("Editar Alumno");
         btnEliminar = new JButton("Eliminar Alumno");
         btnCerrar = new JButton("Cerrar");
@@ -42,7 +42,7 @@ public class MostrarAlumnosFrame extends JFrame {
 
         cargarAlumnos();
 
-        // Acción editar
+        
         btnEditar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -50,7 +50,7 @@ public class MostrarAlumnosFrame extends JFrame {
             }
         });
 
-        // Acción eliminar
+        
         btnEliminar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -58,7 +58,7 @@ public class MostrarAlumnosFrame extends JFrame {
             }
         });
 
-        // Acción cerrar
+        
         btnCerrar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

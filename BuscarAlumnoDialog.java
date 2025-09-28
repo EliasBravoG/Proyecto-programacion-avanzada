@@ -9,8 +9,8 @@ public class BuscarAlumnoDialog extends JDialog {
     private JTextField txtQuery;
     private JTextField txtAsignatura;
     private JButton btnBuscar;
-    private JTable tabla;
-    private DefaultTableModel modelo;
+    private final JTable tabla;
+    private final DefaultTableModel modelo;
 
     public BuscarAlumnoDialog(Frame owner) {
         super(owner, "Buscar Alumno", true);

@@ -2,14 +2,14 @@ import javax.swing.*;
 import java.awt.*;
 
 public class VentanaPrincipal extends JFrame {
-    private JButton btnInsertarAlumno;
-    private JButton btnMostrarAlumnos;
-    private JButton btnMostrarCarreras;
-    private JButton btnMostrarProgreso;
-    private JButton btnAgregarProgreso;
-    private JButton btnActualizarProgreso;
-    private JButton btnBuscar;
-    private JButton btnSalir;
+    private final JButton btnInsertarAlumno;
+    private final JButton btnMostrarAlumnos;
+    private final JButton btnMostrarCarreras;
+    private final JButton btnMostrarProgreso;
+    private final JButton btnAgregarProgreso;
+    private final JButton btnActualizarProgreso;
+    private final JButton btnBuscar;
+    private final JButton btnSalir;
 
     public VentanaPrincipal() {
         setTitle("Sistema de Avance Curricular");

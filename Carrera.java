@@ -2,8 +2,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Carrera {
-    private String nombre;
-    private List<Asignatura> malla = new ArrayList<>();
+    private final String nombre;
+    private final List<Asignatura> malla = new ArrayList<>();
 
     public Carrera(String nombre) { 
         this.nombre = nombre; 

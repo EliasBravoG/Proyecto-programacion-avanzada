@@ -2,13 +2,13 @@ import javax.swing.*;
 import java.awt.*;
 
 public class EditarAlumnoDialog extends JDialog {
-    private JTextField txtRut;
-    private JTextField txtNombre;
-    private JComboBox<String> cmbCarrera;
-    private JButton btnGuardar;
-    private JButton btnCancelar;
+    private final JTextField txtRut;
+    private final JTextField txtNombre;
+    private final JComboBox<String> cmbCarrera;
+    private final JButton btnGuardar;
+    private final JButton btnCancelar;
 
-    private Alumno alumno;
+    private final Alumno alumno;
 
     public EditarAlumnoDialog(Frame owner, Alumno alumno) {
         super(owner, "Editar Alumno", true);

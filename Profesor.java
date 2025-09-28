@@ -2,9 +2,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Profesor {
-    private String rut;
-    private String nombre;
-    private List<Asignatura> asignaturas = new ArrayList<>();
+    private final String rut;
+    private final String nombre;
+    private final List<Asignatura> asignaturas = new ArrayList<>();
 
     public Profesor(String rut, String nombre) {
         this.rut = rut;

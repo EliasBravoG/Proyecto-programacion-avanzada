@@ -4,9 +4,9 @@ import java.awt.*;
 
 public class MostrarCarrerasFrame extends JFrame {
     private JList<String> listaCarreras;
-    private JTable tablaMalla;
-    private DefaultTableModel modeloMalla;
-    private JButton btnCerrar;
+    private final JTable tablaMalla;
+    private final DefaultTableModel modeloMalla;
+    private final JButton btnCerrar;
 
     public MostrarCarrerasFrame() {
         setTitle("Carreras y Mallas");

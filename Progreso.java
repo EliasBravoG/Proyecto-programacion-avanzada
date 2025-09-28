@@ -1,8 +1,8 @@
 public class Progreso {
     public enum EstadoAsignatura { PENDIENTE, CURSANDO, APROBADA, REPROBADA }
 
-    private String idAsignatura;
-    private int creditos;
+    private final String idAsignatura;
+    private final int creditos;
     private EstadoAsignatura estado = EstadoAsignatura.PENDIENTE;
     private Double nota;
 
@@ -12,6 +12,7 @@ public class Progreso {
     }
 
     public void setEstado(EstadoAsignatura e) { this.estado = e; }
+    
     public void setNota(Double nota) {
         if (nota != null && (nota < 1.0 || nota > 7.0)) {
             throw new IllegalArgumentException("Nota fuera de rango (1.0 – 7.0)");

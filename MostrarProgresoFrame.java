@@ -2,24 +2,33 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.List;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.general.DefaultPieDataset;
 import java.io.FileOutputStream;
-import com.itextpdf.text.*;
-import com.itextpdf.text.pdf.*;
-import java.io.FileNotFoundException;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 
 public class MostrarProgresoFrame extends JFrame {
     private JComboBox<String> cmbAlumnos;
-    private JTable tabla;
-    private DefaultTableModel modelo;
-    private JButton btnEditarNota;
-    private JButton btnExportarTXT;
-    private JButton btnGenerarPDF;  
-    private JButton btnCerrar;
-    private JLabel lblEstadisticas;
+    private final JTable tabla;
+    private final DefaultTableModel modelo;
+    private final JButton btnEditarNota;
+    private final JButton btnExportarTXT;
+    private final JButton btnGenerarPDF;
+    private final JButton btnCerrar;
+    private final JLabel lblEstadisticas;
+    private final DefaultPieDataset datasetEstados;
+    private final ChartPanel chartPanel;
+    private final JButton btnEliminarProgreso;
 
     public MostrarProgresoFrame() {
         setTitle("Progreso Académico");
-        setSize(820, 520);
+        setSize(1050, 540);
         setLocationRelativeTo(null);
 
         cmbAlumnos = new JComboBox<>(Repositorio.getAlumnos().values()
@@ -40,25 +49,34 @@ public class MostrarProgresoFrame extends JFrame {
 
         lblEstadisticas = new JLabel("Promedio: - | Avance: -");
 
-        btnEditarNota   = new JButton("Editar Estado/Nota");
-        btnExportarTXT  = new JButton("Exportar TXT");
-        btnGenerarPDF   = new JButton("Generar PDF");
-        btnCerrar       = new JButton("Cerrar");
+        btnEditarNota = new JButton("Editar Estado/Nota");
+        btnEliminarProgreso = new JButton("Eliminar Progreso");
+        btnExportarTXT = new JButton("Exportar TXT");
+        btnGenerarPDF = new JButton("Generar PDF");
+        btnCerrar = new JButton("Cerrar");
 
         JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         panelBotones.add(btnEditarNota);
+        panelBotones.add(btnEliminarProgreso);
         panelBotones.add(btnExportarTXT);
         panelBotones.add(btnGenerarPDF);
         panelBotones.add(btnCerrar);
 
+        datasetEstados = new DefaultPieDataset();
+        chartPanel = crearChartPanel(datasetEstados);
+
+        JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, scroll, chartPanel);
+        split.setDividerLocation(640);
+
         getContentPane().setLayout(new BorderLayout(10, 10));
         getContentPane().add(panelTop, BorderLayout.NORTH);
-        getContentPane().add(scroll, BorderLayout.CENTER);
+        getContentPane().add(split, BorderLayout.CENTER);
         getContentPane().add(lblEstadisticas, BorderLayout.WEST);
         getContentPane().add(panelBotones, BorderLayout.SOUTH);
 
         cmbAlumnos.addActionListener(e -> cargarProgreso());
         btnEditarNota.addActionListener(e -> editarSeleccionado());
+        btnEliminarProgreso.addActionListener(e -> eliminarSeleccionado());
         btnExportarTXT.addActionListener(e -> exportarTXT());
         btnGenerarPDF.addActionListener(e -> generarReportePDF());
         btnCerrar.addActionListener(e -> dispose());
@@ -86,6 +104,8 @@ public class MostrarProgresoFrame extends JFrame {
                 ? al.getCarrera().getMalla().stream().mapToInt(Asignatura::getCreditos).sum()
                 : 0;
 
+        int cPend = 0, cCur = 0, cApr = 0, cRep = 0;
+
         for (Progreso p : historial) {
             String estado = p.getEstado().toString();
             String nota = (p.getNota() != null) ? p.getNota().toString() : "";
@@ -95,8 +115,22 @@ public class MostrarProgresoFrame extends JFrame {
                 sumaNotas += p.getNota() * p.getCreditos();
                 sumaCreditosNotas += p.getCreditos();
             }
-            if (p.getEstado() == Progreso.EstadoAsignatura.APROBADA) {
-                creditosAprobados += p.getCreditos();
+            switch (p.getEstado()) {
+                case PENDIENTE:
+                    cPend++;
+                    break;
+                case CURSANDO:
+                    cCur++;
+                    break;
+                case APROBADA:
+                    cApr++;
+                    creditosAprobados += p.getCreditos();
+                    break;
+                case REPROBADA:
+                    cRep++;
+                    break;
+                default:
+                    break;
             }
         }
 
@@ -104,6 +138,11 @@ public class MostrarProgresoFrame extends JFrame {
         double avance = (creditosTotales > 0) ? (100.0 * creditosAprobados / creditosTotales) : 0;
 
         lblEstadisticas.setText(String.format("Promedio: %.2f | Avance: %.1f%%", promedio, avance));
+
+        datasetEstados.setValue("Pendiente", cPend);
+        datasetEstados.setValue("Cursando", cCur);
+        datasetEstados.setValue("Aprobada", cApr);
+        datasetEstados.setValue("Reprobada", cRep);
     }
 
     private void editarSeleccionado() {
@@ -140,7 +179,7 @@ public class MostrarProgresoFrame extends JFrame {
                 String notaStr = txtNota.getText().trim();
                 if (!notaStr.isEmpty()) {
                     double nota = Double.parseDouble(notaStr);
-                    if (nota < 1.0 || nota > 7.0) throw new IllegalArgumentException("Nota fuera de rango (1.0 – 7.0)");
+                    if (nota < 1.0 || nota > 7.0) throw new IllegalArgumentException("Nota fuera de rango (1.0–7.0)");
                     prog.setNota(nota);
                 } else {
                     prog.setNota(null);
@@ -153,6 +192,37 @@ public class MostrarProgresoFrame extends JFrame {
                 JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Validación", JOptionPane.WARNING_MESSAGE);
             }
         }
+    }
+    private void eliminarSeleccionado() {
+        int fila = tabla.getSelectedRow();
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione una asignatura.", "Aviso", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        String seleccionado = (String) cmbAlumnos.getSelectedItem();
+            if (seleccionado == null) return;
+            String rut = seleccionado.split(" - ")[0];
+            Alumno al = Repositorio.getAlumnos().get(RutUtils.normalizar(rut));
+            if (al == null) return;
+
+        String idAsig = (String) modelo.getValueAt(fila, 0);
+        int opt = JOptionPane.showConfirmDialog(
+            this,
+            "¿Eliminar el progreso de la asignatura " + idAsig + "?",
+            "Confirmar eliminación",
+            JOptionPane.OK_CANCEL_OPTION
+    );
+        if (opt != JOptionPane.OK_OPTION) return;
+
+        boolean ok = al.eliminarProgresoPorId(idAsig); // o eliminarProgresoEnPosicion(fila)
+        if (ok) {
+            Repositorio.guardar();  
+            cargarProgreso();       
+            JOptionPane.showMessageDialog(this, "Progreso eliminado.");
+    }   else {
+            JOptionPane.showMessageDialog(this, "No se pudo eliminar (no encontrado).", "Aviso", JOptionPane.WARNING_MESSAGE);
+    }
     }
 
     private void exportarTXT() {
@@ -224,13 +294,17 @@ public class MostrarProgresoFrame extends JFrame {
             doc.add(new Paragraph(String.format("Promedio: %.2f | Avance: %.1f%%", promedio, avance)));
 
             doc.close();
-            JOptionPane.showMessageDialog(this, "PDF generado: " + nombreArchivo);
-            
 
             JOptionPane.showMessageDialog(this, "PDF generado: " + nombreArchivo);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Error al generar PDF: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-}
 
+    private ChartPanel crearChartPanel(DefaultPieDataset dataset) {
+        JFreeChart chart = ChartFactory.createPieChart("Estados de Asignaturas", dataset, true, true, false);
+        ChartPanel panel = new ChartPanel(chart);
+        panel.setPreferredSize(new Dimension(320, 320));
+        return panel;
+    }
+}
