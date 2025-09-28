@@ -12,35 +12,45 @@ public class Alumno {
         this.nombre = nombre;
     }
 
-    public void agregarProgreso(Progreso progreso) {
-        historial.add(progreso);
-    }
-
-    public void agregarProgreso(String idAsignatura, int creditos) {
-        historial.add(new Progreso(idAsignatura, creditos));
-    }
-
     public String getRut() { return rut; }
-    public void setRut(String rut) { this.rut = rut; }
     public String getNombre() { return nombre; }
-    public void setNombre(String nombre) { this.nombre = nombre; }
     public Carrera getCarrera() { return carrera; }
 
-    // Sincroniza malla -> historial
     public void setCarrera(Carrera carrera) {
         this.carrera = carrera;
-        this.historial.clear();
         if (carrera != null) {
             for (Asignatura a : carrera.getMalla()) {
-                this.historial.add(new Progreso(a.getId(), a.getCreditos()));
+                if (!existeProgresoPara(a.getId())) {
+                    this.historial.add(new Progreso(a.getId(), a.getCreditos()));
+                }
             }
         }
+    }
+    public void setNombre(String nombre) {
+    if (nombre == null || nombre.trim().isEmpty()) {
+        throw new IllegalArgumentException("Nombre vacío.");
+    }
+    this.nombre = nombre.trim();
+}
+
+
+    public void agregarProgreso(Progreso progreso) {
+        if (progreso == null) return;
+        for (Progreso p : historial) {
+            if (p.getIdAsignatura().equals(progreso.getIdAsignatura())) return;
+        }
+        historial.add(progreso);
     }
 
     public List<Progreso> getHistorial() { return historial; }
 
-    @Override
-    public String toString() {
-        return rut + " - " + nombre;
+    private boolean existeProgresoPara(String idAsignatura) {
+        for (Progreso p : historial) {
+            if (p.getIdAsignatura().equals(idAsignatura)) return true;
+        }
+        return false;
     }
+
+    @Override
+    public String toString() { return nombre + " (" + rut + ")"; }
 }
