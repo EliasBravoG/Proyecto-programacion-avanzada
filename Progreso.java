@@ -11,22 +11,16 @@ public class Progreso {
         this.creditos = creditos;
     }
 
-    public void aprobar(double nota) {
-        setNota(nota);
-        this.estado = EstadoAsignatura.APROBADA;
-    }
-
-    public void reprobar(double nota) {
-        setNota(nota);
-        this.estado = EstadoAsignatura.REPROBADA;
-    }
-
+    public void setEstado(EstadoAsignatura e) { this.estado = e; }
     public void setNota(Double nota) {
         if (nota != null && (nota < 1.0 || nota > 7.0)) {
-            throw new IllegalArgumentException("Nota fuera de rango (1.0–7.0)");
+            throw new IllegalArgumentException("Nota fuera de rango (1.0 – 7.0)");
         }
         this.nota = nota;
     }
+
+    public void aprobar(double nota) { setNota(nota); this.estado = EstadoAsignatura.APROBADA; }
+    public void reprobar(double nota) { setNota(nota); this.estado = EstadoAsignatura.REPROBADA; }
 
     public String getIdAsignatura() { return idAsignatura; }
     public int getCreditos() { return creditos; }

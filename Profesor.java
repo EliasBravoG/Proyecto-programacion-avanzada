@@ -12,7 +12,7 @@ public class Profesor {
     }
 
     public void agregarAsignatura(Asignatura asignatura) {
-        asignaturas.add(asignatura);
+        if (asignatura != null) asignaturas.add(asignatura);
     }
 
     public String getRut() { return rut; }
@@ -21,6 +21,6 @@ public class Profesor {
 
     @Override
     public String toString() {
-        return rut + " - " + nombre + " (" + asignaturas.size() + " asignaturas)";
+        return nombre + " (" + rut + ") - " + asignaturas.size() + " asignaturas";
     }
 }
